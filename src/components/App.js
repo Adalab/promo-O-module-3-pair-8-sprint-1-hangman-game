@@ -22,10 +22,19 @@ import { useState } from "react";
 
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState('');
 
   const handleButtonClick = () => {
     setNumberOfErrors(numberOfErrors + 1);
   };
+  const handleInputChange = (ev) => {
+    const inputValue = ev.currentTarget.value;
+    const regex = new RegExp("^[a-zA-Z\u00C0-\u00FF]*$");
+    if(regex.test(inputValue)){
+      setLastLetter(inputValue);
+    }
+
+  }
 
   return (
     <div>
@@ -34,7 +43,7 @@ function App() {
           <h1 className="header__title">Juego del ahorcado</h1>
         </header>
         <main className="main">
-          <section>
+          <section>          
             <div className="solution">
               <h2 className="title">Solución:</h2>
               <ul className="letters">
@@ -61,16 +70,18 @@ function App() {
               </ul>
             </div>
             <form className="form">
-              <label className="title" for="last-letter">
+              <label className="title" htmlFor="last-letter">
                 Escribe una letra:
               </label>
               <input
-                autocomplete="off"
+                autoComplete="off"
                 className="form__input"
-                maxlength="1"
+                maxLength="1"
                 type="text"
                 name="last-letter"
                 id="last-letter"
+                value={lastLetter}
+                onChange={handleInputChange}
               />
             </form>
           </section>
