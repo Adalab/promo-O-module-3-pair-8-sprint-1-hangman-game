@@ -31,10 +31,18 @@ function App() {
   };
   const handleInputChange = (ev) => {
     const inputValue = ev.currentTarget.value;
-    const regex = new RegExp("^[a-zA-Z\u00C0-\u00FF]*$");
+    const regex = new RegExp("^[a-zA-Z\u00C0-\u00FF]?$");
     if (regex.test(inputValue)) {
       setLastLetter(inputValue);
       // setLastLetter("");
+      
+      // if(lastInput !== ""){
+        //   if (word.includes(lastInput)){
+        //     // Al array de letras buenas
+        //   } else {
+        //     // Al array de letras fallidas
+        //   }
+        // }
       setUserLetters([...userLetters, inputValue])
     }
   };
