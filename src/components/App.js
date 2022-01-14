@@ -21,8 +21,10 @@ import { useState } from "react";
 // Si se ha completado la solución, ganas, reset, nueva palabra api
 
 function App() {
+  const [word, setWord] = useState("pepino");
   const [numberOfErrors, setNumberOfErrors] = useState(0);
-  const [lastLetter, setLastLetter] = useState('');
+  const [lastLetter, setLastLetter] = useState("");
+  const [userLetters, setUserLetters] = useState([])
 
   const handleButtonClick = () => {
     setNumberOfErrors(numberOfErrors + 1);
@@ -30,11 +32,20 @@ function App() {
   const handleInputChange = (ev) => {
     const inputValue = ev.currentTarget.value;
     const regex = new RegExp("^[a-zA-Z\u00C0-\u00FF]*$");
-    if(regex.test(inputValue)){
+    if (regex.test(inputValue)) {
       setLastLetter(inputValue);
+      // setLastLetter("");
+      setUserLetters([...userLetters, inputValue])
     }
+  };
 
-  }
+  const renderSolutionLetters = () => {
+    const wordLetters = word.split("");
+    // Pintar el guión de cada letra
+    return wordLetters.map((eachLetter, index) => {
+      return <li className="letter" key={index}></li>;
+    });
+  };
 
   return (
     <div>
@@ -43,11 +54,12 @@ function App() {
           <h1 className="header__title">Juego del ahorcado</h1>
         </header>
         <main className="main">
-          <section>          
+          <section>
             <div className="solution">
               <h2 className="title">Solución:</h2>
               <ul className="letters">
-                <li className="letter">k</li>
+                {renderSolutionLetters()}
+                {/* <li className="letter">k</li>
                 <li className="letter">a</li>
                 <li className="letter"></li>
                 <li className="letter">a</li>
@@ -56,7 +68,7 @@ function App() {
                 <li className="letter"></li>
                 <li className="letter">k</li>
                 <li className="letter">e</li>
-                <li className="letter">r</li>
+                <li className="letter">r</li> */}
               </ul>
             </div>
             <div className="error">
