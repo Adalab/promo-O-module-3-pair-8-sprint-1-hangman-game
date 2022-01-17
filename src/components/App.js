@@ -24,7 +24,10 @@ function App() {
   const [word, setWord] = useState("pepino");
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState("");
-  const [userLetters, setUserLetters] = useState([])
+  const [userLetters, setUserLetters] = useState([]);
+  const correctLetters = [];
+  const incorrectLetters = [];
+  
 
   const handleButtonClick = () => {
     setNumberOfErrors(numberOfErrors + 1);
@@ -34,16 +37,9 @@ function App() {
     const regex = new RegExp("^[a-zA-Z\u00C0-\u00FF]?$");
     if (regex.test(inputValue)) {
       setLastLetter(inputValue);
-      // setLastLetter("");
-      
-      // if(lastInput !== ""){
-        //   if (word.includes(lastInput)){
-        //     // Al array de letras buenas
-        //   } else {
-        //     // Al array de letras fallidas
-        //   }
-        // }
-      setUserLetters([...userLetters, inputValue])
+      if (inputValue !== "") {
+        setUserLetters([...userLetters, inputValue]);
+      }
     }
   };
 
@@ -51,9 +47,20 @@ function App() {
     const wordLetters = word.split("");
     // Pintar el guión de cada letra
     return wordLetters.map((eachLetter, index) => {
-      return <li className="letter" key={index}></li>;
-    });
+        if (eachLetter === lastLetter){
+          correctLetters.push(lastLetter);
+          console.log(correctLetters);
+          return <li className="letter" key={index}>{lastLetter}</li>
+       } else {
+        incorrectLetters.push(lastLetter);
+        return <li className="letter" key={index}></li>
+       }
+      }
+    );
   };
+  const renderErrorLetters = () => {
+    
+  }
 
   return (
     <div>
